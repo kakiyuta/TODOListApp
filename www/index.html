@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <title>TODO List App</title>
+
         <!-- onsenui関連 -->
         <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
         <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
@@ -10,24 +13,29 @@
         <script src="js/index.js"></script>
     </head>
     <body>
+
+        <ons-navigator id="myNavigator" page="splitter.html"></ons-navigator>
+
+        <template id="splitter.html">
         <ons-splitter>
-          <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-            <ons-page>
-              <ons-list>
-                <ons-list-item onclick="myApp.load('home.html')" tappable>
-                  Home
-                </ons-list-item>
-                <ons-list-item onclick="myApp.load('settings.html')" tappable>
-                  Settings
-                </ons-list-item>
-                <ons-list-item onclick="myApp.load('about.html')" tappable>
-                  About
-                </ons-list-item>
-              </ons-list>
-            </ons-page>
-          </ons-splitter-side>
-          <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
-        </ons-splitter>
+              <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+                <ons-page>
+                  <ons-list>
+                    <ons-list-item onclick="myApp.load('home.html')" tappable>
+                      Home
+                    </ons-list-item>
+                    <ons-list-item onclick="myApp.load('settings.html')" tappable>
+                      Settings
+                    </ons-list-item>
+                    <ons-list-item onclick="myApp.load('about.html')" tappable>
+                      About
+                    </ons-list-item>
+                  </ons-list>
+                </ons-page>
+              </ons-splitter-side>
+              <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
+            </ons-splitter>
+        </template>
 
         <template id="home.html">
           <ons-page>
