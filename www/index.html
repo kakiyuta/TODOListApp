@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
         <meta charset="utf-8" />
@@ -11,6 +11,7 @@
 
         <!-- javascript -->
         <script src="js/index.js"></script>
+        <script src="js/controller.js"></script>
     </head>
     <body>
 
@@ -18,18 +19,20 @@
         <ons-navigator id="myNavigator" page="splitter.html"></ons-navigator>
 
         <template id="splitter.html">
-        <ons-splitter>
-              <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
-                <!-- <ons-page>
-                  <ons-list>
-                    <ons-list-item onclick="myApp.load('home.html')" tappable>
-                      Home
-                    </ons-list-item>
-                  </ons-list>
-                </ons-page> -->
-              </ons-splitter-side>
-              <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
-            </ons-splitter>
+            <ons-page>
+                <ons-splitter id="mySplitter">
+                    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+                        <ons-page>
+                          <ons-list>
+                            <ons-list-item onclick="myApp.load('home.html')" tappable>
+                              Home
+                            </ons-list-item>
+                          </ons-list>
+                        </ons-page>
+                    </ons-splitter-side>
+                    <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
+                </ons-splitter>
+            </ons-page>
         </template>
 
         <template id="tabbar.html">
@@ -37,6 +40,7 @@
                 <ons-toolbar>
                     <dev class="left">
                         <!-- Splitterサイドメニュー表示ボタン -->
+                        <!-- <ons-toolbar-button id="menu-button"> -->
                         <ons-toolbar-button component="button/menu">
                             <ons-icon icon="ion-navicon" size="32px"></ons-icon>
                         </ons-toolbar-button>
@@ -57,53 +61,5 @@
                 </ons-tabbar>
             </ons-page>
         </template>
-
-        <!-- <template id="home.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                Main
-              </div>
-            </ons-toolbar>
-            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-              Swipe right to open the menu!
-            </p>
-          </ons-page>
-        </template>
-
-        <template id="settings.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                Settings
-              </div>
-            </ons-toolbar>
-          </ons-page>
-        </template>
-
-        <template id="about.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                About
-              </div>
-            </ons-toolbar>
-          </ons-page>
-        </template> -->
     </body>
 </html>
