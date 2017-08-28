@@ -1,6 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <title>TODO List App</title>
+
         <!-- onsenui関連 -->
         <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
         <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
@@ -8,73 +11,81 @@
 
         <!-- javascript -->
         <script src="js/index.js"></script>
+        <script src="js/controller.js"></script>
     </head>
     <body>
-        <ons-splitter>
-          <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+
+
+        <ons-navigator id="myNavigator" page="splitter.html"></ons-navigator>
+
+        <template id="splitter.html">
             <ons-page>
-              <ons-list>
-                <ons-list-item onclick="myApp.load('home.html')" tappable>
-                  Home
-                </ons-list-item>
-                <ons-list-item onclick="myApp.load('settings.html')" tappable>
-                  Settings
-                </ons-list-item>
-                <ons-list-item onclick="myApp.load('about.html')" tappable>
-                  About
-                </ons-list-item>
-              </ons-list>
+                <ons-splitter id="mySplitter">
+                    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+                        <ons-page>
+                          <ons-list>
+                            <ons-list-item onclick="myApp.load('home.html')" tappable>
+                              Home
+                            </ons-list-item>
+                          </ons-list>
+                        </ons-page>
+                    </ons-splitter-side>
+                    <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
+                </ons-splitter>
             </ons-page>
-          </ons-splitter-side>
-          <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
-        </ons-splitter>
-
-        <template id="home.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                Main
-              </div>
-            </ons-toolbar>
-            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-              Swipe right to open the menu!
-            </p>
-          </ons-page>
         </template>
 
-        <template id="settings.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                Settings
-              </div>
-            </ons-toolbar>
-          </ons-page>
+        <template id="tabbar.html">
+            <ons-page id="tabbarPage">
+                <ons-toolbar>
+                    <dev class="left">
+                        <!-- Splitterサイドメニュー表示ボタン -->
+                        <!-- <ons-toolbar-button id="menu-button"> -->
+                        <ons-toolbar-button component="button/menu">
+                            <ons-icon icon="ion-navicon" size="32px"></ons-icon>
+                        </ons-toolbar-button>
+                    </dev>
+                    <dev class="center">Todos</dev>
+                    <dev class="right">
+                        <!-- 新規タスクを追加 -->
+                        <ons-toolbar-button component="button/new-task">
+                            <ons-icon icon="ion-plus-circled" size="32px"></ons-icon>
+                        </ons-toolbar-button>
+                    </dev>
+                </ons-toolbar>
+
+                <!-- タスク一覧[未完了/完了]切り替え -->
+                <ons-tabbar id="myTabbar" position="auto">
+                    <ons-tab page="pending_task.html" label="Pending" active></ons-tab>
+                    <ons-tab page="completed_tasks.html" label="Complated"></ons-tab>
+                </ons-tabbar>
+            </ons-page>
         </template>
 
-        <template id="about.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                About
-              </div>
-            </ons-toolbar>
-          </ons-page>
+        <!-- タスク新規作成画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="new_task.html">
+            <ons-page id="newTaskPage">
+                hogehoge
+            </ons-page>
+        </template>
+
+        <!-- Pendingタスク画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="pending_task.html">
+            <ons-page id="pendingTaskPage">
+                <ons-list id="pending-list">
+                </ons-list>
+            </ons-page>
+        </template>
+
+        <!-- Complateタスク画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="completed_tasks.html">
+            <ons-page id="complatedTasksPage">
+                <ons-list id="completed-list">
+                </ons-list>
+            </ons-page>
         </template>
     </body>
 </html>
