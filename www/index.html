@@ -56,8 +56,8 @@
 
                 <!-- タスク一覧[未完了/完了]切り替え -->
                 <ons-tabbar id="myTabbar" position="auto">
-                    <ons-tab page="" label="Pending" active></ons-tab>
-                    <ons-tab page="" label="Complated"></ons-tab>
+                    <ons-tab page="pending_task.html" label="Pending" active></ons-tab>
+                    <ons-tab page="completed_tasks.html" label="Complated"></ons-tab>
                 </ons-tabbar>
             </ons-page>
         </template>
@@ -67,6 +67,24 @@
         <template id="new_task.html">
             <ons-page id="newTaskPage">
                 hogehoge
+            </ons-page>
+        </template>
+
+        <!-- Pendingタスク画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="pending_task.html">
+            <ons-page id="pendingTaskPage">
+                <ons-list id="pending-list">
+                </ons-list>
+            </ons-page>
+        </template>
+
+        <!-- Complateタスク画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="completed_tasks.html">
+            <ons-page id="complatedTasksPage">
+                <ons-list id="completed-list">
+                </ons-list>
             </ons-page>
         </template>
     </body>
