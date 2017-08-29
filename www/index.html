@@ -4,6 +4,9 @@
         <meta charset="utf-8" />
         <title>TODO List App</title>
 
+        <!-- CSS -->
+        <link rel="stylesheet" href="style.css" />
+        
         <!-- onsenui関連 -->
         <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
         <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
@@ -12,6 +15,8 @@
         <!-- javascript -->
         <script src="js/index.js"></script>
         <script src="js/controller.js"></script>
+        <script src="js/service.js"></script>
+
     </head>
     <body>
 
@@ -83,7 +88,7 @@
         <!-- TODO : 別HTMLファイルに分割する予定 -->
         <template id="completed_tasks.html">
             <ons-page id="complatedTasksPage">
-                <ons-list id="completed-list">
+                <ons-list id="complated-list">
                 </ons-list>
             </ons-page>
         </template>
