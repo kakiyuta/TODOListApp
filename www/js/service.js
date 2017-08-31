@@ -31,9 +31,26 @@ myApp.service = {
             };
             taskItem.addEventListener('change', taskItem.data.onCheckboxChange);
 
+            // タスク削除イベント
+            taskItem.querySelector('.right').onclick = function() {
+                myApp.service.tasks.remove(taskItem);
+            }
+
             // タスクをPending画面に追加
             var pendingList = document.querySelector('#pending-list');
             pendingList.insertBefore(taskItem, null);
+        },
+
+        remove: function(taskItem) {
+            // 登録されている変更イベント削除
+            taskItem.removeEventListener('chane', taskItem.data.onCheckboxChange);
+
+            myApp.service.animators.remove(taskItem, function(){
+                // タスクを削除
+                taskItem.remove();
+
+                // TODO: タスクの削除
+            });
         },
     },
 
@@ -64,6 +81,16 @@ myApp.service = {
                 callback();
             }, 950);
         },
+
+        // remove
+        remove: function(listItem, callback) {
+            listItem.classList.add('animation-remove');
+            listItem.classList.add('hide-children');
+
+            setTimeout(function() {
+                callback();
+            }, 750);
+        }
     },
 
     // 初期表示用タスク
