@@ -25,7 +25,6 @@ myApp.service = {
             taskItem.data.onCheckboxChange = function(event) {
                 myApp.service.animators.swipe(taskItem, function() {
                     var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#complated-list' : '#pending-list';
-                    console.log(listId);
                     document.querySelector(listId).appendChild(taskItem);
                 });
             };
@@ -36,9 +35,19 @@ myApp.service = {
                 myApp.service.tasks.remove(taskItem);
             }
 
+            // TODO: タスククリック時の詳細情報画面遷移イベント追加
+
+            // TODO: カテゴリ追加処理追加
+
+            // ハイライト処理
+            if (taskItem.data.highlight) {
+                console.log(taskItem);
+                taskItem.classList.add('highlight');
+            }
+
             // タスクをPending画面に追加
             var pendingList = document.querySelector('#pending-list');
-            pendingList.insertBefore(taskItem, null);
+            pendingList.insertBefore(taskItem, taskItem.data.urgent ? pendingList.firstChild : null);
         },
 
         remove: function(taskItem) {
@@ -170,7 +179,7 @@ myApp.service = {
             category: "foo bar HOGE",
             description: "",
             highlight: false,
-            urgent: false
+            urgent: true
         }
     ]
 
