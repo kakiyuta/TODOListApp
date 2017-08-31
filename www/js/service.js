@@ -21,7 +21,7 @@ myApp.service = {
             // エレメントにタスクデータを保存
             taskItem.data = data;
 
-            // チェック時のComplation処理
+            // チェックイベント(Pendint ←→ Complated 切り替えイベント)
             taskItem.data.onCheckboxChange = function(event) {
                 myApp.service.animators.swipe(taskItem, function() {
                     var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#complated-list' : '#pending-list';
