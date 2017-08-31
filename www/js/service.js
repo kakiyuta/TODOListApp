@@ -41,7 +41,6 @@ myApp.service = {
 
             // ハイライト処理
             if (taskItem.data.highlight) {
-                console.log(taskItem);
                 taskItem.classList.add('highlight');
             }
 
