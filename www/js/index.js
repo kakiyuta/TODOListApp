@@ -10,4 +10,12 @@ document.addEventListener('init', function(event) {
     if (myApp.controller.hasOwnProperty(page.id)) {
         myApp.controller[page.id](page);
     }
+
+    //初期表示用タスクテンプレート表示
+    if (page.id === 'pendingTaskPage') {
+        // TODO : 初期表示以外は表示させないように条件を追加する必要がある
+        myApp.service.initTasks.forEach(function(data) {
+            myApp.service.tasks.create(data);
+        });
+    }
 });
