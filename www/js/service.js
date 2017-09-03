@@ -1,11 +1,11 @@
-myApp.service = {
+myApp.services = {
     // タスクサービス
     tasks: {
         // タスク作成
         create: function(data) {
             // HTMLエレメント作成
             var taskItem = ons.createElement(
-                '<ons-list-item tappable category="' + myApp.service.categories.parseId(data.category) +'">' +
+                '<ons-list-item tappable category="' + myApp.services.categories.parseId(data.category) +'">' +
                     '<label class="left">' +
                         '<ons-checkbox></ons-checkbox>' +
                     '</label>' +
@@ -23,7 +23,7 @@ myApp.service = {
 
             // チェックイベント(Pendint ←→ Complated 切り替えイベント)
             taskItem.data.onCheckboxChange = function(event) {
-                myApp.service.animators.swipe(taskItem, function() {
+                myApp.services.animators.swipe(taskItem, function() {
                     var listId = (taskItem.parentElement.id === 'pending-list' && event.target.checked) ? '#complated-list' : '#pending-list';
                     document.querySelector(listId).appendChild(taskItem);
                 });
@@ -32,16 +32,16 @@ myApp.service = {
 
             // タスク削除イベント
             taskItem.querySelector('.right').onclick = function() {
-                myApp.service.tasks.remove(taskItem);
+                myApp.services.tasks.remove(taskItem);
             }
 
             // TODO: タスククリック時の詳細情報画面遷移イベント追加
 
             // TODO: カテゴリ追加処理追加
+            myApp.services.categories.updateAdd(taskItem.data.category);
 
             // ハイライト処理
             if (taskItem.data.highlight) {
-                console.log(taskItem);
                 taskItem.classList.add('highlight');
             }
 
@@ -54,7 +54,7 @@ myApp.service = {
             // 登録されている変更イベント削除
             taskItem.removeEventListener('chane', taskItem.data.onCheckboxChange);
 
-            myApp.service.animators.remove(taskItem, function(){
+            myApp.services.animators.remove(taskItem, function(){
                 // タスクを削除
                 taskItem.remove();
 
@@ -67,7 +67,50 @@ myApp.service = {
     categories: {
         // カテゴリ新規作成&カテゴリリストに登録
         create: function(categoryLabel) {
+            var categoryId = myApp.services.categories.parseId(categoryLabel);
 
+            // カテゴリリストエレメント
+            var categoryItem = ons.createElement(
+                '<ons-list-item tappable category-id="' + categoryId + '">' +
+                    '<div class="left">' +
+                        '<ons-radio name="categoryGroup" input-id="radio-' + categoryId + '"></ons-radio>' +
+                    '</div>' +
+                    '<label class="center" for="radio-' + categoryId + '">' +
+                        (categoryLabel || 'No category') +
+                    '</label>' +
+                '</ons-list-item>'
+            );
+
+            // カテゴリフィルター機能の実装
+            myApp.services.categories.bindOnCheckboxChange(categoryItem);
+
+            // 新規カテゴリをカスタムカテゴリーリストに追加
+            document.querySelector('#custom-category-list').appendChild(categoryItem);
+        },
+
+        updateAdd: function(categoryLabel) {
+            var categoryId = myApp.services.categories.parseId(categoryLabel);
+            var categoryItem = document.querySelector('#menuPage ons-list-item[category-id="' + categoryId +'"]');
+
+            // 新規カテゴリの場合
+            if(!categoryItem) {
+                myApp.services.categories.create(categoryLabel);
+            }
+        },
+
+        bindOnCheckboxChange: function(categoryItem) {
+            var categoryId = categoryItem.getAttribute('category-id')
+            var allItems = categoryId === null;
+
+            categoryItem.updateCategoryView = function() {
+                var query = '[category="' + (categoryId || '') + '"]';
+
+                var taskItem = document.querySelectorAll('#tabbarPage ons-list-item');
+                for (var i = 0; i < taskItem.length; i++) {
+                    taskItem[i].style.display = (allItems || taskItem[i].getAttribute('category') === categoryId) ? '' : 'none';
+                }
+            };
+            categoryItem.addEventListener('change', categoryItem.updateCategoryView);
         },
 
         // カテゴリ名をIDに変換
