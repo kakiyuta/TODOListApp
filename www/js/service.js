@@ -35,7 +35,17 @@ myApp.services = {
                 myApp.services.tasks.remove(taskItem);
             }
 
-            // TODO: タスククリック時の詳細情報画面遷移イベント追加
+            // タスクタップイベント
+            taskItem.querySelector('.center').onclick = function() {
+                document.querySelector('#myNavigator')
+                .pushPage('details_task.html',
+                {
+                    animation: 'lift',
+                    data: {
+                        element: taskItem
+                    }
+                });
+            };
 
             // カテゴリ追加処理
             myApp.services.categories.updateAdd(taskItem.data.category);
@@ -62,6 +72,26 @@ myApp.services = {
                 myApp.services.categories.updateRemove(taskItem.data.category);
             });
         },
+
+        updata: function(taskItem, data) {
+
+            if (data.title !== taskItem.data.title) {
+                // タイトル更新
+                taskItem.querySelector('.center').innerHTML = data.title;
+            }
+
+            if (data.category !== taskItem.data.category) {
+                // カテゴリ更新
+                taskItem.setAttribute('category', myApp.services.categories.parseId(data.category));
+                myApp.services.categories.updateAdd(data.category);
+                myApp.services.categories.updateRemove(taskItem.data.category);
+            }
+
+            // ハイライト設定
+            taskItem.classList[data.highlight ? 'add' : 'remove']('highlight');
+
+            taskItem.data = data;
+        }
     },
 
     // カテゴリサービス
