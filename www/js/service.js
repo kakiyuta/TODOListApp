@@ -37,7 +37,7 @@ myApp.services = {
 
             // TODO: タスククリック時の詳細情報画面遷移イベント追加
 
-            // TODO: カテゴリ追加処理追加
+            // カテゴリ追加処理
             myApp.services.categories.updateAdd(taskItem.data.category);
 
             // ハイライト処理
@@ -58,7 +58,8 @@ myApp.services = {
                 // タスクを削除
                 taskItem.remove();
 
-                // TODO: タスクの削除
+                // 不要になってカテゴリを削除
+                myApp.services.categories.updateRemove(taskItem.data.category);
             });
         },
     },
@@ -95,6 +96,26 @@ myApp.services = {
             // 新規カテゴリの場合
             if(!categoryItem) {
                 myApp.services.categories.create(categoryLabel);
+            }
+        },
+
+        // タスク削除/更新による不要になったカテゴリを削除
+        updateRemove: function(categoryLabel) {
+            var categoryId = myApp.services.categories.parseId(categoryLabel);
+            var categoryItem = document.querySelector('tabbarPage ons-list-item[category="' + categoryId +'"]');
+
+            if (!categoryItem)
+             {
+                myApp.services.categories.remove(document.querySelector('#custom-category-list ons-list-item[category-id="' + categoryId + '"]'));
+            }
+        },
+
+        // カテゴリリストからカテゴリを削除
+        remove: function(categoryItem) {
+            if (categoryItem) {
+                // 変更イベントを削除
+                categoryItem.removeEventListener('change', categoryItem.updateCategoryView);
+                categoryItem.remove();
             }
         },
 
