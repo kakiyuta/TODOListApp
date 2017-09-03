@@ -14,8 +14,8 @@ document.addEventListener('init', function(event) {
     //初期表示用タスクテンプレート表示
     if (page.id === 'pendingTaskPage') {
         // TODO : 初期表示以外は表示させないように条件を追加する必要がある
-        myApp.service.initTasks.forEach(function(data) {
-            myApp.service.tasks.create(data);
+        myApp.services.initTasks.forEach(function(data) {
+            myApp.services.tasks.create(data);
         });
     }
 });
