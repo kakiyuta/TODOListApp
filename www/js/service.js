@@ -35,7 +35,17 @@ myApp.services = {
                 myApp.services.tasks.remove(taskItem);
             }
 
-            // TODO: タスククリック時の詳細情報画面遷移イベント追加
+            // タスクタップイベント
+            taskItem.querySelector('.center').onclick = function() {
+                document.querySelector('#myNavigator')
+                .pushPage('details_task.html',
+                {
+                    animation: 'lift',
+                    data: {
+                        element: taskItem
+                    }
+                });
+            };
 
             // カテゴリ追加処理
             myApp.services.categories.updateAdd(taskItem.data.category);
