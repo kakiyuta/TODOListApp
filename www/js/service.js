@@ -81,6 +81,9 @@ myApp.service = {
                 '</ons-list-item>'
             );
 
+            // カテゴリフィルター機能の実装
+            myApp.service.categories.bindOnCheckboxChange(categoryItem);
+
             // 新規カテゴリをカスタムカテゴリーリストに追加
             document.querySelector('#custom-category-list').appendChild(categoryItem);
         },
@@ -94,6 +97,22 @@ myApp.service = {
                 myApp.service.categories.create(categoryLabel);
             }
         },
+
+        bindOnCheckboxChange: function(categoryItem) {
+            var categoryId = categoryItem.getAttribute('category-id')
+            var allItems = categoryId === null;
+
+            categoryItem.updateCategoryView = function() {
+                var query = '[category="' + (categoryId || '') + '"]';
+
+                var taskItem = document.querySelectorAll('#tabbarPage ons-list-item');
+                for (var i = 0; i < taskItem.length; i++) {
+                    taskItem[i].style.display = (allItems || taskItem[i].getAttribute('category') === categoryId) ? '' : 'none';
+                }
+            };
+            categoryItem.addEventListener('change', categoryItem.updateCategoryView);
+        },
+
         // カテゴリ名をIDに変換
         parseId: function(categoryLabel) {
             return categoryLabel ? categoryLabel.replace(/\s\s+/g, ' ').toLowerCase() : '';
