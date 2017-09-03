@@ -38,6 +38,7 @@ myApp.service = {
             // TODO: タスククリック時の詳細情報画面遷移イベント追加
 
             // TODO: カテゴリ追加処理追加
+            myApp.service.categories.updateAdd(taskItem.data.category);
 
             // ハイライト処理
             if (taskItem.data.highlight) {
@@ -66,9 +67,33 @@ myApp.service = {
     categories: {
         // カテゴリ新規作成&カテゴリリストに登録
         create: function(categoryLabel) {
+            var categoryId = myApp.service.categories.parseId(categoryLabel);
 
+            // カテゴリリストエレメント
+            var categoryItem = ons.createElement(
+                '<ons-list-item tappable category-id="' + categoryId + '">' +
+                    '<div class="left">' +
+                        '<ons-radio name="categoryGroup" input-id="radio-' + categoryId + '"></ons-radio>' +
+                    '</div>' +
+                    '<label class="center" for="radio-' + categoryId + '">' +
+                        (categoryLabel || 'No category') +
+                    '</label>' +
+                '</ons-list-item>'
+            );
+
+            // 新規カテゴリをカスタムカテゴリーリストに追加
+            document.querySelector('#custom-category-list').appendChild(categoryItem);
         },
 
+        updateAdd: function(categoryLabel) {
+            var categoryId = myApp.service.categories.parseId(categoryLabel);
+            var categoryItem = document.querySelector('#menuPage ons-list-item[category-id="' + categoryId +'"]');
+
+            // 新規カテゴリの場合
+            if(!categoryItem) {
+                myApp.service.categories.create(categoryLabel);
+            }
+        },
         // カテゴリ名をIDに変換
         parseId: function(categoryLabel) {
             return categoryLabel ? categoryLabel.replace(/\s\s+/g, ' ').toLowerCase() : '';
