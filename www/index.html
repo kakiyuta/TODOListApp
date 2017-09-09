@@ -1,80 +1,273 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="utf-8" />
+        <title>TODO List App</title>
+
         <!-- onsenui関連 -->
         <link rel="stylesheet" href="lib/onsen/css/onsenui.css" />
         <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css" />
         <script src="lib/onsen/js/onsenui.js"></script>
 
+        <!-- CSS -->
+        <link rel="stylesheet" href="style.css" />
+
         <!-- javascript -->
         <script src="js/index.js"></script>
+        <script src="js/controller.js"></script>
+        <script src="js/service.js"></script>
+
     </head>
     <body>
-        <ons-splitter>
-          <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+
+
+        <ons-navigator id="myNavigator" page="splitter.html"></ons-navigator>
+
+        <template id="splitter.html">
             <ons-page>
-              <ons-list>
-                <ons-list-item onclick="myApp.load('home.html')" tappable>
-                  Home
-                </ons-list-item>
-                <ons-list-item onclick="myApp.load('settings.html')" tappable>
-                  Settings
-                </ons-list-item>
-                <ons-list-item onclick="myApp.load('about.html')" tappable>
-                  About
-                </ons-list-item>
-              </ons-list>
+                <ons-splitter id="mySplitter">
+                    <ons-splitter-side id="menu" side="left" width="220px" collapse swipeable>
+                        <!-- メニューバー -->
+                        <!-- TODO : 別HTMLファイルに分割する予定 -->
+                        <ons-page id="menuPage">
+                            <ons-list>
+                                <ons-list-title>Links</ons-list-title>
+                                <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                                  onclick="window.open('https://github.com/kakiyuta/TODOListApp')">
+                                    <div class="left">
+                                        <ons-icon icon="fa-external-link" style="color: grey"></ons-icon>
+                                    </div>
+                                    <div class="center">
+                                        Github repo
+                                    </div>
+                                </ons-list-item>
+                                <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                                  onclick="window.open('https://onsen.io/')">
+                                    <div class="left">
+                                        <ons-icon icon="fa-external-link" style="color: grey"></ons-icon>
+                                    </div>
+                                    <div class="center">
+                                        Onsen UI
+                                    </div>
+                                </ons-list-item>
+                                <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                                  onclick="window.open('https://cordova.apache.org/')">
+                                    <div class="left">
+                                        <ons-icon icon="fa-external-link" style="color: grey"></ons-icon>
+                                    </div>
+                                    <div class="center">
+                                        Apache Cordova
+                                    </div>
+                                </ons-list-item>
+                                <ons-list-item tappable style="cursor: pointer" modifier="longdivider chevron"
+                                  onclick="window.open('http://www.google.com/')">
+                                    <div class="left">
+                                        <ons-icon icon="fa-external-link" style="color: grey"></ons-icon>
+                                    </div>
+                                    <div class="center">
+                                        Google
+                                    </div>
+                                </ons-list-item>
+
+                                <ons-list-title>Default</ons-list-title>
+                                <ons-list id="default-category-list">
+                                    <ons-list-item tappable>
+                                        <div class="left">
+                                            <ons-radio name="categoryGroup" input-id="r-all" checked></ons-radio>
+                                        </div>
+                                        <label class="center" for="r-all">All</label>
+                                    </ons-list-item>
+                                    <ons-list-item tappable category-id="">
+                                        <div class="left">
+                                            <ons-radio name="categoryGroup" input-id="r-no"></ons-radio>
+                                        </div>
+                                        <label class="center" for="r-no">No category</label>
+                                    </ons-list-item>
+                                </ons-list>
+
+                                <ons-list-title>Custom categories</ons-list-title>
+                                <ons-list id="custom-category-list">
+                                </ons-list>
+                            </ons-list>
+                        </ons-page>
+
+                    </ons-splitter-side>
+                    <ons-splitter-content id="content" page="tabbar.html"></ons-splitter-content>
+                </ons-splitter>
             </ons-page>
-          </ons-splitter-side>
-          <ons-splitter-content id="content" page="home.html"></ons-splitter-content>
-        </ons-splitter>
-
-        <template id="home.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                Main
-              </div>
-            </ons-toolbar>
-            <p style="text-align: center; opacity: 0.6; padding-top: 20px;">
-              Swipe right to open the menu!
-            </p>
-          </ons-page>
         </template>
 
-        <template id="settings.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                Settings
-              </div>
-            </ons-toolbar>
-          </ons-page>
+        <template id="tabbar.html">
+            <ons-page id="tabbarPage">
+                <ons-toolbar>
+                    <dev class="left">
+                        <!-- Splitterサイドメニュー表示ボタン -->
+                        <!-- <ons-toolbar-button id="menu-button"> -->
+                        <ons-toolbar-button component="button/menu">
+                            <ons-icon icon="ion-navicon" size="32px"></ons-icon>
+                        </ons-toolbar-button>
+                    </dev>
+                    <dev class="center">Todos</dev>
+                    <dev class="right">
+                        <!-- 新規タスクを追加 -->
+                        <ons-toolbar-button component="button/new-task">
+                            <ons-icon icon="ion-plus-circled" size="32px"></ons-icon>
+                        </ons-toolbar-button>
+                    </dev>
+                </ons-toolbar>
+
+                <!-- タスク一覧[未完了/完了]切り替え -->
+                <ons-tabbar id="myTabbar" position="auto">
+                    <ons-tab page="pending_task.html" label="Pending" active></ons-tab>
+                    <ons-tab page="completed_tasks.html" label="Complated"></ons-tab>
+                </ons-tabbar>
+            </ons-page>
         </template>
 
-        <template id="about.html">
-          <ons-page>
-            <ons-toolbar>
-              <div class="left">
-                <ons-toolbar-button onclick="myApp.open()">
-                  <ons-icon icon="md-menu"></ons-icon>
-                </ons-toolbar-button>
-              </div>
-              <div class="center">
-                About
-              </div>
-            </ons-toolbar>
-          </ons-page>
+        <!-- タスク新規作成画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="new_task.html">
+            <ons-page id="newTaskPage">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-back-button>Todos</ons-back-button>
+                    </div>
+                    <div class="center">
+                        New Task
+                    </div>
+                    <div class="right">
+                        <ons-toolbar-button component="button/save-task">
+                            <ons-icon icon="md-save"></ons-icon>
+                        </ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+
+                <ons-list-title>Add new task</ons-list-title>
+                <ons-list>
+                    <ons-list-item modifier="nodivider">
+                        <div class="center">
+                            <ons-input id="title-input" type="text" placeholder="I want to..." float></ons-input>
+                        </div>
+                    </ons-list-item>
+                    <ons-list-item modifier="nodivider">
+                        <div class="center">
+                            <ons-input id="category-input" type="text" placeholder="Category" float></ons-input>
+                        </div>
+                    </ons-list-item>
+                    <ons-list-item modifier="nodivider">
+                        <div class="center">
+                            <ons-input id="description-input" type="text" placeholder="Description" float></ons-input>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+
+                <ons-list-title>Other options</ons-list-title>
+                <ons-list>
+                    <ons-list-item modifier="nodivider">
+                        <label class="center" for="inner-highlight-input">
+                            Highlight
+                        </label>
+                        <div class="right">
+                            <ons-switch id="highlight-input" input-id="inner-highlight-input"></ons-switch>
+                        </div>
+                    </ons-list-item>
+                    <ons-list-item modifier="nodivider">
+                        <label class="center" for="inner-urgent-input">
+                            Is it urgent?
+                        </label>
+                        <div class="right">
+                            <ons-switch id="urgent-input" input-id="inner-urgent-input"></ons-switch>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+            </ons-page>
+        </template>
+
+        <!-- Pendingタスク画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="pending_task.html">
+            <ons-page id="pendingTaskPage">
+                <ons-list id="pending-list">
+                </ons-list>
+            </ons-page>
+        </template>
+
+        <!-- Complateタスク画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="completed_tasks.html">
+            <ons-page id="complatedTasksPage">
+                <ons-list id="complated-list">
+                </ons-list>
+            </ons-page>
+        </template>
+
+        <!-- タスク詳細画面 -->
+        <!-- TODO : 別HTMLファイルに分割する予定 -->
+        <template id="details_task.html">
+            <ons-page id="detailsTaskPage">
+                <ons-toolbar>
+                    <div class="left">
+                        <ons-back-button></ons-back-button>
+                    </div>
+                    <div class="center">
+                        Task Details
+                    </div>
+                    <div class="right">
+                        <ons-toolbar-button component="button/save-task">
+                            Save
+                        </ons-toolbar-button>
+                    </div>
+                </ons-toolbar>
+
+                <ons-list-title>Modify your task</ons-list-title>
+                <ons-list>
+                    <ons-list-item modifier="nodivider">
+                        <div class="left left-label">
+                            Title
+                        </div>
+                        <div class="center">
+                            <ons-input id="title-input" type="text" placeholder="I want to..." float></ons-input>
+                        </div>
+                    </ons-list-item>
+
+                    <ons-list-item modifier="nodivider">
+                        <div class="left left-label">
+                            Category
+                        </div>
+                        <div class="center">
+                            <ons-input id="category-input" type="text" placeholder="Category" float></ons-input>
+                        </div>
+                    </ons-list-item>
+                    <ons-list-item modifier="nodivider">
+                        <div class="left left-label">
+                            Description
+                        </div>
+                        <div class="center">
+                            <ons-input id="description-input" type="text" placeholder="Description" float></ons-input>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+
+                <ons-list-title>Other option</ons-list-title>
+                <ons-list>
+                    <ons-list-item modifier="nodivider">
+                        <label class="center" for="inner-highlight-input">
+                            Heihlight?
+                        </label>
+                        <div class="right">
+                            <ons-switch id="highlight-input" input-id="inner-highlight-input"></ons-switch>
+                        </div>
+                    </ons-list-item>
+                    <ons-list-item modifier="nodivider">
+                        <label class="center" for="inner-urgent-input">
+                            Is it urgent?
+                        </label>
+                        <div class="right">
+                            <ons-switch id="urgent-input" input-id="inner-urgent-input" disabled></ons-switch>
+                        </div>
+                    </ons-list-item>
+                </ons-list>
+            </ons-page>
         </template>
     </body>
 </html>
