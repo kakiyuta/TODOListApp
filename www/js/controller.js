@@ -69,5 +69,33 @@ myApp.controller = {
                 ons.notification.alert('You must provide a task title.');
             }
         };
+    },
+
+    newTaskPage: function(page) {
+        // saveボタン
+        page.querySelector('[component="button/save-task"]').onclick = function() {
+            var newTitle = page.querySelector('#title-input').value;
+
+            if(newTitle) {
+                myApp.services.tasks.create(
+                    {
+                        title: newTitle,
+                        category: page.querySelector('#category-input').value,
+                        description: page.querySelector('#description-input').value,
+                        highlight: page.querySelector('#highlight-input').checked,
+                        urgent: page.querySelector('#urgent-input').checked
+                    }
+                );
+
+                // フィルター設定をALLに変更
+                document.querySelector('#default-category-list ons-list-item ons-radio').checked = true;
+                // カテゴリ一覧を更新
+                document.querySelector('#default-category-list ons-list-item').updateCategoryView();
+                // ページを戻る
+                document.querySelector('#myNavigator').popPage();
+            } else {
+                ons.notification.alert('You must provide a task title.');
+            }
+        };
     }
 }
